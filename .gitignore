@@ -1,4 +1,8 @@
 *~
 *.csv
+*.xpr
 *.xsd
 lib/*
+
+# ignore generated XML files too
+*.xml

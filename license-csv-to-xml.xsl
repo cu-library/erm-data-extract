@@ -8,7 +8,7 @@
     <xsl:strip-space elements="*"/>
     
     <xsl:param name="csv-encoding" as="xs:string" select="'iso-8859-1'"/>
-    <xsl:param name="csv-uri" as="xs:string" select="'file:///Users/jwhitney/Desktop/license-xml/all-licenses-2019-01-30-complete.csv'"/>
+    <xsl:param name="csv-uri" as="xs:string"/>
     
     <!-- Smarter parser -->
     <xsl:function name="fn:getTokens" as="xs:string+">
