@@ -30,7 +30,7 @@
         
         1. license_id           (License: Record #)
         2. eresource_id         (Eresource: Record #)
-        3. eresource_name       (Eresource
+        3. eresource_name       (Eresource)
         4. status
         5. licensor_sign_date
         6. contract_start_date
@@ -112,8 +112,12 @@
                                 </xsl:call-template>                                
                             </xsl:variable>
                             
-                            <!-- licensor code: links to vendor code? @todo ask Ex Libris --> 
-                            <xsl:variable name="access_provider" select="$tokens[8]"/>
+                            <!-- 
+                                Not mapped: $tokens[8]. Access provider field references Contact codes, but
+                                licensor_code expects a Vendor code reference. See Alma KB, 
+                                Managing Licenses and Amendments.
+                                <xsl:variable name="access_provider" select="$tokens[8]"/>
+                            -->
                             
                             
                             <!-- Confidential? Map Sierra code to text -->
@@ -227,9 +231,6 @@
                                         
                                         <!-- @todo check with David, Pam on review status. -->
                                         <review_status>ACCEPTED</review_status>
-                                        
-                                        <!-- @todo check with David, Pam on licensor code: access provider? or data provider? Value is required so prefer 'none' to blank or hyphens -->
-                                        <licensor_code><xsl:value-of select="$access_provider"/></licensor_code>
                                         
                                         <!-- Blank date elements are not permitted -->
                                         <xsl:if test="$signed_on!=''">
