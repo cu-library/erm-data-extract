@@ -10,7 +10,10 @@
     <xsl:param name="csv-encoding" as="xs:string" select="'iso-8859-1'"/>
     <xsl:param name="csv-uri" as="xs:string"/>
     
-    <!-- Smarter parser -->
+    <!-- 
+        CSV parser from Andrew Welch
+        http://andrewjwelch.com/code/xslt/csv/csv-to-xml_v2.html
+    -->
     <xsl:function name="fn:getTokens" as="xs:string+">
         <xsl:param name="str" as="xs:string" />
         <xsl:analyze-string select="concat($str, ',')" regex='(("[^"]*")+|[^,]*),'>
@@ -22,15 +25,17 @@
     
     <!-- 
         CSV fields. Function tokenize() returns 1-based list.
+        All fields exported from License record except where noted.
+        All field names the same as in Sierra except where noted.
         
-        1. license_id
-        2. eresource_id
-        3. eresource_name
+        1. license_id           (License: Record #)
+        2. eresource_id         (Eresource: Record #)
+        3. eresource_name       (Eresource
         4. status
         5. licensor_sign_date
         6. contract_start_date
         7. contract_end_date
-        8. access_provider
+        8. access_provider      (Eresource)
         9. confidential
         10. auto_renew
         11. breach_cure
