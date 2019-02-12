@@ -66,6 +66,15 @@
                 <!-- Define delimiter to split multi-value fields -->
                 <xsl:variable name="multi_delimiter">";"</xsl:variable>
                 
+                <!-- 
+                    Migration date. Used in license record history, as license start date
+                    where no start date exists in Sierra, and in license notes as needed.
+                    Schema requires YYYYMMDD. Format with hyphens for readability in notes. 
+                -->
+                <xsl:variable name="migration_date" select="current-date()"/>
+                <xsl:variable name="schema_date_format" select="'[Y0001][M01][D01]'"/>
+                <xsl:variable name="note_date_format" select="'[Y0001]-[M01]-[D01]'"/>
+                
                 <!--Get Header-->
                 <xsl:variable name="header-tokens" as="xs:string*">
                     <xsl:analyze-string select="$csv" regex="\r\n?|\n">
@@ -251,6 +260,7 @@
                                         <type>LICENSE</type>
                                         <ownered_entity>
                                             <created_by>Sierra ERM to Alma migration</created_by>
+                                            <creation_date><xsl:value-of select="format-date($migration_date, $schema_date_format)"/></creation_date>
                                         </ownered_entity>
                                     </license_details>
                                     
