@@ -245,13 +245,15 @@
                                         <xsl:if test="$signed_on!=''">
                                             <signed_on><xsl:value-of select="$signed_on"/></signed_on>
                                         </xsl:if>
-                                        <!-- start_date is required. If not present, add valid but nonsensical date for later review -->                                        
+                                        
+                                        <!-- start_date is required. If not present, use migration date and add note to notes section -->                                        
                                         <start_date>
                                             <xsl:choose>
                                                 <xsl:when test="$start_date!=''"><xsl:value-of select="$start_date"/></xsl:when>
-                                                <xsl:otherwise>19000101</xsl:otherwise>
+                                                <xsl:otherwise><xsl:value-of select="format-date($migration_date, $schema_date_format)"/></xsl:otherwise>
                                             </xsl:choose>
                                         </start_date>
+                                        
                                         <xsl:if test="$end_date!=''">
                                             <end_date><xsl:value-of select="$end_date"/></end_date>
                                         </xsl:if>
@@ -367,6 +369,14 @@
                                     
                                     <!-- Add notes where present -->
                                     <note_list>
+                                        <!-- Migration date supplied as license start date? -->
+                                        <xsl:if test="$start_date=''">
+                                            <xsl:call-template name="generate-note">
+                                                <xsl:with-param 
+                                                    name="note" 
+                                                    select="concat('License start date: not available in Sierra. Set to migration date ', format-date($migration_date, $note_date_format), ' on import to Alma.')"/>
+                                            </xsl:call-template>
+                                        </xsl:if>
                                         <!-- License type? -->
                                         <xsl:if test="$license_type!=''">
                                             <xsl:call-template name="generate-note">
